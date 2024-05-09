@@ -1,50 +1,34 @@
-#importa os outros arquivos (desenhos.py e random)
-import desenhos as d
-from random import choice
+import jogo as j
+import time as t
 
-listaPalavras = list()
-arquivo = open("palavras.txt", "r")     #Pega palavra por palavra do TXT e vai atribuindo ao arquivo
-
-for linha in arquivo :
-    palavra = linha.strip()
-    listaPalavras.append(palavra)       #Pega todas as palavras do arquivo e coloca na lista de palavras
-
-palavraSorteada = choice(listaPalavras)     #Escolhe aleatoriamente uma palavra que está na lista de palavras
-
-
-digitadas = []  #Guarda as letras que já foram digitadas
-acertos = []    #Guarda as letras qua já forem acertadas
-erros = 0       #Armazena a qtd de erros até o usuário perder
+def mostrarMenu() :
+    print("=" * 30)
+    print("JOGO DA FORCA".center(30))
+    print("=" * 30)
+    print("\n1 - JOGAR")
+    print("2 - SCORE")
+    print("3 - SAIR")
 
 while True :
-    adivinha = d.imprimirPalavraSecreta(palavraSorteada, acertos)
+    mostrarMenu()
 
-    # Condição de vitória
-    if adivinha == palavraSorteada :
-        print("Parabéns! Você acertou a palavra!")
+    opcao = int(input("Digite a opção desejada (1/2/3): "))
+
+    if opcao == 1 :
+        print("Iniciando o jogo!")
+        t.sleep(1)
+        j.jogar()
+
+
+    elif opcao == 2 :
+        print("Scores")
+
+    elif opcao == 3 :
+        print("Saindo do Jogo!")
+        t.sleep(1)
         break
-
-    # Chute de letra
-    tentativa = input("\nDigite uma letra: ").lower().strip()
-
-    if tentativa in digitadas :
-        print("Você já chutou essa letra.")
-        continue                    #Retorna para o início do laço inicial While True caso a pessoa chute uma letra já digitada
 
     else :
-        digitadas += tentativa
-
-        if tentativa in palavraSorteada :   #Se a letra chutada estiver na palavra secreta
-            acertos += tentativa
-
-        else :                      #Se a letra chutada não estiver na palavra secreta, adiciona 1 erro
-            erros += 1
-            print("Você errou!")
-
-    d.desenharForca(erros)
-
-    # Condição de Perder o Jogo
-    if erros == 6 :
-        print("Enforcado!")
-        print(f"A palavra era {palavraSorteada}")
-        break
+        print("Opção inválida! Tente novamente!")
+        t.sleep(1)
+        mostrarMenu()
