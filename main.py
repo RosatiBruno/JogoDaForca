@@ -1,22 +1,26 @@
-#importa os outros arquivos (desenhos.py)
+#importa os outros arquivos (desenhos.py e random)
 import desenhos as d
+from random import choice
 
-#Pede a digitação da palavra a ser acertada, converte ela para toda minúscula e remove espaços em branco no ínicio e fim
-palavra = input("Digite uma palavra secreta: ").lower().strip()
+listaPalavras = list()
+arquivo = open("palavras.txt", "r")     #Pega palavra por palavra do TXT e vai atribuindo ao arquivo
 
-#Pula 50 linhas para "limpar" o terminal e a outra pessoa não ver a palavra secreta
-for x in range(50) :
-    print()
+for linha in arquivo :
+    palavra = linha.strip()
+    listaPalavras.append(palavra)       #Pega todas as palavras do arquivo e coloca na lista de palavras
+
+palavraSorteada = choice(listaPalavras)     #Escolhe aleatoriamente uma palavra que está na lista de palavras
+
 
 digitadas = []  #Guarda as letras que já foram digitadas
 acertos = []    #Guarda as letras qua já forem acertadas
 erros = 0       #Armazena a qtd de erros até o usuário perder
 
 while True :
-    adivinha = d.imprimirPalavraSecreta(palavra, acertos)
+    adivinha = d.imprimirPalavraSecreta(palavraSorteada, acertos)
 
     # Condição de vitória
-    if adivinha == palavra :
+    if adivinha == palavraSorteada :
         print("Parabéns! Você acertou a palavra!")
         break
 
@@ -30,7 +34,7 @@ while True :
     else :
         digitadas += tentativa
 
-        if tentativa in palavra :   #Se a letra chutada estiver na palavra secreta
+        if tentativa in palavraSorteada :   #Se a letra chutada estiver na palavra secreta
             acertos += tentativa
 
         else :                      #Se a letra chutada não estiver na palavra secreta, adiciona 1 erro
@@ -42,5 +46,5 @@ while True :
     # Condição de Perder o Jogo
     if erros == 6 :
         print("Enforcado!")
-        print(f"A palavra era {palavra}")
+        print(f"A palavra era {palavraSorteada}")
         break
