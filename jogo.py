@@ -1,8 +1,8 @@
-#importa os outros arquivos (desenhos.py e random)
+import bd
 import desenhos as d
 from random import choice
 
-def jogar() :
+def jogar(conn) :
     for i in range (50) :
         print(" ")
 
@@ -19,6 +19,8 @@ def jogar() :
     digitadas = []  #Guarda as letras que já foram digitadas
     acertos = []    #Guarda as letras qua já forem acertadas
     erros = 0       #Armazena a qtd de erros até o usuário perder
+
+    nome = input("Quem está jogando? ")
 
     while True :
         adivinha = d.imprimirPalavraSecreta(palavraSorteada, acertos)
@@ -45,10 +47,12 @@ def jogar() :
                 erros += 1
                 print("Você errou!")
 
-        d.desenharForca(erros)
+        score = d.desenharForca(erros)
 
         # Condição de Perder o Jogo
         if erros == 6 :
             print("Enforcado!")
             print(f"A palavra era {palavraSorteada}")
             break
+
+    bd.inserirDado(conn, nome, score)
