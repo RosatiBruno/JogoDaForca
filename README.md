@@ -18,7 +18,7 @@ git clone https://github.com/RosatiBruno/JogoDaForca.git
 
 4. Abra a pasta do projeto no PyCharm.
 
-5. Execute o projeto.
+5. Execute o arquivo 'main.py'.
 
 ## Requisitos
 - Python 3 ou superior.
